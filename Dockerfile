@@ -12,18 +12,10 @@ RUN apt-get install -y openssh-client
 RUN mkdir -p /root/.ssh
 RUN echo 'Host github.com\n  HostName github.com\n  IdentityFile ~/.ssh/id_rsa\n  User git' > /root/.ssh/config
 
-COPY id_rsa /root/.ssh/
-
 RUN git config --global user.email "nsplat@gmail.com"; \
     git config --global user.name "jimako"
 
 RUN ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
-
-RUN ssh -T git@github.com & echo 'continue'
-
-# https://qiita.com/rorensu2236/items/df7d4c2cf621eeddd468
-RUN git clone ssh://git@github.com/alunir/alunir
-RUN cd ./alunir; git remote set-url origin git@github.com:alunir/alunir.git
 
 # gcloud configuration
 # https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu?hl=ja
@@ -34,7 +26,6 @@ RUN gcloud config configurations create cloud-dev; \
     gcloud config set account nsplat@gmail.com
 
 RUN mkdir -p /root/.kube
-COPY service_account_gcp.json /root/.kube
 
-COPY gcloud-auth_mount_snap_install.sh /root/
+COPY install.sh /root/
 
