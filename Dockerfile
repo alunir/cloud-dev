@@ -30,7 +30,7 @@ RUN gcloud config configurations create cloud-dev; \
 RUN mkdir -p /root/.kube
 
 # mount
-RUN UUID=(blkid /dev/sdb | awk '{print $2}' | sed -e s/UUID=//g | sed -e 's/\"//g') && \
+RUN UUID=`blkid /dev/sdb | awk '{print $2}' | sed -e s/UUID=//g | sed -e 's/\"//g'` && \
     mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb && \
     mkdir -p /mnt/disks && \
     mount -o discard,defaults /dev/sdb /mnt/disks && \
