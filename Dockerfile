@@ -1,6 +1,8 @@
 FROM ubuntu:latest
 MAINTAINER jimako1989
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt update && apt install -y sudo xrdp
 
 RUN apt-get install -y docker.io
