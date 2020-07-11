@@ -1,5 +1,8 @@
 #!/bin/sh
-echo "Setup cloud-dev"
+echo "Usage: ./cloud-dev.sh INSTANCE_NAME"
+
+INSTANCE_NAME=$1
+USER_NAME=jimako
 
 if [ ! -e ~/.ssh/id_rsa ]; then
   echo "Not found ~/.ssh/id_rsa"
@@ -11,9 +14,15 @@ if [ ! -e ~/.kube/service_account_gcp.json ]; then
   exit 1
 fi
 
+# User Setting
+sudo adduser $USER_NAME
+sudo gpasswd -a $USER_NAME sudo
+sudo passwd $USER_NAME
+
+# Skip interactive installation for git
 export DEBIAN_FRONTEND=noninteractive
 
-apt update && apt install -y sudo xrdp
+apt update && apt install -y sudo gnome-core xrdp
 
 apt-get install -y docker.io
 docker --version
@@ -52,6 +61,10 @@ read -p "Starting gcloud auth login"
 gcloud auth login
 gcloud auth activate-service-account 654650874191-compute@developer.gserviceaccount.com --key-file=/root/.kube/service_account_gcp.json
 gcloud auth configure-docker
+
+read -p "Set this IP to the static IP..."
+IP_ADDRESS=`ip -4 a show ens4 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'`
+gcloud compute addresses create "cloud-dev" --addresses IP_ADDRESS --region "asia-northeast1-b" --global
 
 # mount
 UUID=`blkid /dev/sdb | awk '{print $2}' | sed -e s/UUID=//g | sed -e 's/\"//g'`
