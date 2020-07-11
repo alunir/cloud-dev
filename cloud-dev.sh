@@ -1,6 +1,16 @@
 #!/bin/sh
 echo "Setup cloud-dev"
 
+if [ ! -e ~/.ssh/id_rsa ]; then
+  echo "Not found ~/.ssh/id_rsa"
+  exit 1
+fi
+
+if [ ! -e ~/.kube/service_account_gcp.json ]; then
+  echo "Not found ~/.kube/service_account_gcp.json"
+  exit 1
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt update && apt install -y sudo xrdp
@@ -31,35 +41,26 @@ mkdir -p /root/.kube
 
 
 # git
-read -p "Did you save id_rsa to ~/.ssh/id_rsa?"
-ls -l ~/.ssh/id_rsa
-ssh -T git@github.com & echo 'Success!'
+ssh -T git@github.com & echo 'SSH Connection Success!'
 
-read -p "Cloning alunir repository in ~/Document?"
 cd ~/Document
 # https://qiita.com/rorensu2236/items/df7d4c2cf621eeddd468
 git clone ssh://git@github.com/alunir/alunir
 cd ./alunir; git remote set-url origin git@github.com:alunir/alunir.git
 
-read -p "Did you save service_account_gcp.json to ~/.kube?"
-ls -l ~/.kube
-
 read -p "Starting gcloud auth login"
 gcloud auth login
-pause
 gcloud auth activate-service-account 654650874191-compute@developer.gserviceaccount.com --key-file=/root/.kube/service_account_gcp.json
-pause
 gcloud auth configure-docker
-pause
 
 # mount
-RUN UUID=`blkid /dev/sdb | awk '{print $2}' | sed -e s/UUID=//g | sed -e 's/\"//g'`
+UUID=`blkid /dev/sdb | awk '{print $2}' | sed -e s/UUID=//g | sed -e 's/\"//g'`
 mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 mkdir -p /mnt/disks
 mount -o discard,defaults /dev/sdb /mnt/disks
 chmod a+w /mnt/disks
 cp /etc/fstab /etc/fstab.bkp
-eval UUID="\$UUID" /mnt/disks ext4 discard,defaults,nobootwait 0 2 >> /etc/fstab
+UUID="${UUID}" /mnt/disks ext4 discard,defaults,nobootwait 0 2 >> /etc/fstab
 ln -s /mnt/disks/snap
 
 # install go with snap
