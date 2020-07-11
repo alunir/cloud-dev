@@ -8,6 +8,7 @@ if [ ! -e ~/.ssh/id_rsa ]; then
   echo "Not found ~/.ssh/id_rsa"
   exit 1
 fi
+chmod 644 ~/.ssh/id_rsa
 
 if [ ! -e ~/.kube/service_account_gcp.json ]; then
   echo "Not found ~/.kube/service_account_gcp.json"
