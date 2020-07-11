@@ -86,7 +86,8 @@ ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
 ssh -T git@github.com || echo 'SSH Connection Success!'
 
 
-cd ~/
+mkdir -p ~/alunir
+cd ~/alunir
 # https://qiita.com/rorensu2236/items/df7d4c2cf621eeddd468
 git clone ssh://git@github.com/alunir/alunir
 cd ./alunir; git remote set-url origin git@github.com:alunir/alunir.git
