@@ -98,9 +98,9 @@ cd ./alunir; git remote set-url origin git@github.com:alunir/alunir.git
 gcloud auth configure-docker
 
 # install go with snap
-mkdir -p /home/$USER/go
+mkdir -p /go
 sudo snap install --classic go
-go env -w GOPATH=/home/$USER/go
+go env -w GOPATH=/go
 go env -w GOPROXY=direct
 go env -w GOPRIVATE=github.com/alunir
 
@@ -110,5 +110,10 @@ sudo snap install --classic kompose
 
 read -p "gcloud container clusters get-credentials"
 gcloud container clusters get-credentials alunir --region us-central1-a
+
+echo export PATH=$PATH:`go env GOPATH`/bin/ >> ~/.profile
+echo export GOPATH=`go env GOPATH` >> ~/.profile
+
+cp ./settings.json ~/$USER_NAME/.config/Code/User/
 
 echo "Finished! Recommend to save here to a VM Image"

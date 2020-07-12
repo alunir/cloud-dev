@@ -1,0 +1,20 @@
+{
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "files.autoSave": "onWindowChange",
+    "tabnine.experimentalAutoImports": true,
+    "go.gopath": "/go",
+    "go.goroot": "/snap/go/5830",
+    "go.lintTool": "golint",
+    "window.zoomLevel": 0,
+    "go.formatTool": "goimports",
+    "go.lintOnSave": "file",
+    "terminal.integrated.env.linux": {
+        "PATH": "/sbin:/bin:/usr/bin:/usr/local/bin:/snap/bin:/go/bin/",
+        "GOPATH": "/go",
+        "GO111MODULE": "on",
+        "GOSUMDB": "off",
+        "GOROOT": "/snap/go/5830",
+    },
+    "editor.fontWeight": "300",
+}
