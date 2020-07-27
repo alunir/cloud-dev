@@ -56,7 +56,7 @@ sudo apt-get install -y openssh-client
 mkdir -p ~/.ssh
 sudo echo 'Host github.com\n  HostName github.com\n  IdentityFile ~/.ssh/id_rsa\n  User git' > ~/.ssh/config
 
-"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpNIFcvoSEHnizei7sYsoRK1tBYfHtkGkWiwkTXtoWiAyDkIYU6RzGiMxh7wInwKWMVY9OieD4cJYAQvUQpCKRZNIrDyOui5E4yCfuSiWzcUP0C9i6MqlKK18SB0Sxw6sUrwtRa9kbrpV+bM3B6ti/mMe92atJ7X13tuRny+qWXHUoooDW5yBq/abKgBsbIPLQ2WeH26VmvjnEDQvccanvn76ZpvT99XY6tECwpOfREejptkUzKCcYarHe4ezWK/rlMO91WgM+6rror5ym59rC1tDVxb0zttjPDecugO6benCiHcPTYxiOsAGb6tiIkva0QdtbCvtz6z40tiNJjE83 jimako@jimako-MacBook.local" >> ~/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpNIFcvoSEHnizei7sYsoRK1tBYfHtkGkWiwkTXtoWiAyDkIYU6RzGiMxh7wInwKWMVY9OieD4cJYAQvUQpCKRZNIrDyOui5E4yCfuSiWzcUP0C9i6MqlKK18SB0Sxw6sUrwtRa9kbrpV+bM3B6ti/mMe92atJ7X13tuRny+qWXHUoooDW5yBq/abKgBsbIPLQ2WeH26VmvjnEDQvccanvn76ZpvT99XY6tECwpOfREejptkUzKCcYarHe4ezWK/rlMO91WgM+6rror5ym59rC1tDVxb0zttjPDecugO6benCiHcPTYxiOsAGb6tiIkva0QdtbCvtz6z40tiNJjE83 jimako@jimako-MacBook.local" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 
 git config --global user.email $GIT_USER_EMAIL
